@@ -1,21 +1,10 @@
 from datetime import datetime
-from translation import MorseCodeTranslator
+from translation import MorseCodeTranslator, MorseCodeLinkedList
 import os
+import sys
 
-#create a stack for the morse code
-# class Stack:
-#     def __init__(self):
-#         self.items = []
-#     def isEmpty(self):
-#         return self.items == []
-#     def push(self, item):
-#         self.items.append(item)
-#     def pop(self):
-#         return self.items.pop()
-#     def peek(self):
-#         return self.items[len(self.items)-1]
-#     def size(self):
-#         return len(self.items)
+
+# from linkedlist import MorseCodeLinkedList
 
 
 class Morse_Frequency:
@@ -101,27 +90,43 @@ class Morse_Frequency:
     """
         return report
 
-    def generate_graph(self, decoded_morse, stop_words):
+    def generate_graph(self, decoded_morse, stop_words, words_linkedlist):
         # Time stamp
         print(decoded_morse)
+        words_linkedlist.set_list(words_linkedlist)  # Update the linked list properly
+        
         timestamp = datetime.now().strftime("%d-%m-%Y %H:%M")
         
-        # Count word frequencies 
+        # Count word frequencies
         word_frequencies = self.__count_word_frequencies(decoded_morse)
         # Identify keywords
         keywords = self.__identify_keywords(word_frequencies, stop_words)
+        # Remove words in the linked list that are not in the keywords
+        words_linkedlist.remove_existence(stop_words)  # Pass stop_words to the method
+        words_linkedlist.print_list(words_linkedlist)  # Print the updated linked list
         
+        # Sort keywords by frequency
+        sorted_keywords = sorted(keywords.items(), key=lambda x: (-x[1], x[0]))
+        # Extract the frequencies of the keywords
+        keyword_frequencies = [freq for _, freq in sorted_keywords]
+        # Remove words in the linked list that are not in the keywords (if needed)
+
+            
+        
+        print(keyword_frequencies)
         # Construct the graph
         graph = f"""\
 {"*" * 42}
    REPORT GENERATED ON: {timestamp}
 {"*" * 42}
 
-"""
-
+"""     
+        
+        print_vertical_bars(keyword_frequencies,words_linkedlist)
         return graph
     
-def print_vertical_bars(numbers):
+def print_vertical_bars(numbers,words_linkedlist):
+    
     max_height = max(numbers)
     total_bars_width = sum(numbers)
     num_bars = len(numbers)
@@ -156,7 +161,7 @@ def print_vertical_bars(numbers):
 
     # Print fixed length base
     print("-" * 60)
-
+    words_linkedlist.report_generation_method()
 
 
  
