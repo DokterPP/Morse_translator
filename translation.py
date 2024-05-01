@@ -58,22 +58,29 @@ class MorseCodeLinkedList:
             output_line = ""
             num_bars = self.get_size()
             #calculate space between bars
-            space_between_bars = total_spaces // (num_bars - 1)
+            space_between_bars = total_spaces // (num_bars)
             
             # Iterate through the linked list to build the output line
             while current:
                 morse_length = len(current.morse_code)
                 word_length = len(current.word)
-                
+                flag = False
                 # Concatenate the Morse code and word pair if within the range, otherwise add empty space
                 if i < morse_length and i < word_length:
-                    output_line += f"{current.morse_code[i]} {current.word[i]}"
+                    output_line += f"{current.morse_code[i]}{current.word[i]}"
+                    flag = True
                 elif i < morse_length:
-                    output_line += f"{current.morse_code[i]} "
+                    output_line += f"{current.morse_code[i]}"
                 elif i < word_length:
                     output_line += f"{current.word[i]}"
-
-                output_line += " " * space_between_bars  # Add spaces between bars
+                #check for no morse code or word
+                else:
+                    output_line += " "
+                
+                if flag == True:
+                    output_line += " " * (space_between_bars - 1)
+                else: 
+                    output_line += " " * space_between_bars   # Add spaces between bars
                 
                 current = current.next  # Move to the next node
                 
