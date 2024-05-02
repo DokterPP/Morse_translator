@@ -62,6 +62,7 @@ class MorseCodeLinkedList:
             
             # Iterate through the linked list to build the output line
             while current:
+
                 morse_length = len(current.morse_code)
                 word_length = len(current.word)
                 flag = False
@@ -78,7 +79,7 @@ class MorseCodeLinkedList:
                     output_line += " "
                 
                 if flag == True:
-                    output_line += " " * (space_between_bars - 1)
+                    output_line += " " * (space_between_bars - 1 )
                 else: 
                     output_line += " " * space_between_bars   # Add spaces between bars
                 
@@ -89,26 +90,36 @@ class MorseCodeLinkedList:
                 
 
         
-            
-        
-            
     # access word portion of linked list
     def remove_existence(self, stop_words):
+        # Set to keep track of unique words
+        unique_words = set()
+        
         # Iterate through linked list and remove words that are not in stop_words
         current = self.head
         prev = None
         while current:
             if current.word.lower() not in stop_words:
-                prev = current
-                current = current.next
+
+                if current.word.lower() not in unique_words:
+                    # Add word to unique_words set
+                    unique_words.add(current.word.lower())
+                    prev = current
+                    current = current.next
+                else:
+                    # Remove duplicate word
+                    if current == self.head:
+                        self.head = current.next
+                        current = self.head
+                    else:
+                        prev.next = current.next
+                        current = prev.next
             else:
                 # Remove word
                 if current == self.head:
-                    print("removing head")
                     self.head = current.next
                     current = self.head
                 else:
-                    print("removing word")
                     prev.next = current.next
                     current = prev.next
 
@@ -116,11 +127,10 @@ class MorseCodeLinkedList:
         MorseCodeLinkedList.linkedlist = self
 
     
-    
     def print_list(self,linkedlist):
         current = linkedlist.head
         while current:
-            print(f"{current.morse_code} => {current.word}")
+            # print(f"{current.morse_code} => {current.word}")
             current = current.next
             
 
@@ -202,6 +212,10 @@ class MorseCodeTranslator:
                     return None
                 decoded_message += decoded_word + ' '
                 if output_linkedlist:
+                    if word[0] == ",":
+                        word = word[1:]
+                        if word[-1] == ",":
+                            word = word[:-1]
                     morse_linkedlist.add_node(word, decoded_word)
             decoded_message += '\n'
         if output_linkedlist:

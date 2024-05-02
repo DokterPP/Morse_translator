@@ -1,10 +1,7 @@
 from datetime import datetime
 from translation import MorseCodeTranslator, MorseCodeLinkedList
 import os
-import sys
 
-
-# from linkedlist import MorseCodeLinkedList
 
 
 class Morse_Frequency:
@@ -101,6 +98,7 @@ class Morse_Frequency:
         word_frequencies = self.__count_word_frequencies(decoded_morse)
         # Identify keywords
         keywords = self.__identify_keywords(word_frequencies, stop_words)
+        
         # Remove words in the linked list that are not in the keywords
         words_linkedlist.remove_existence(stop_words)  # Pass stop_words to the method
         words_linkedlist.print_list(words_linkedlist)  # Print the updated linked list
