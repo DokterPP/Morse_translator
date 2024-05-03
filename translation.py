@@ -81,8 +81,9 @@ class MorseCodeLinkedList:
         current = self.head
         num_bars = self.get_size()
         output_line = ""
-        total_spaces = 60 
+        spaces = 60 
         final = ''
+        total_spaces = spaces - num_bars
         # Iterate through each Morse code-word pair position
         for i in range(self.get_individual_morse_code_total()):
             current = self.head  # Reset current to the head of the linked list

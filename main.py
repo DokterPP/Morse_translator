@@ -56,9 +56,12 @@ def main():
             elif choice == '4':
                 
                 file_deet = file_access().fileInput()
-                text,words_linkedlist = MorseCodeTranslator().decode(file_deet[0], output_linkedlist=True)
-                graph = Morse_Frequency().generate_graph(text, stop_words, words_linkedlist)
-                file_access().fileOutput(graph, file_deet[1], " Graph")
+                if MorseCodeTranslator().decode(file_deet[0], output_linkedlist=True) == None:
+                    file_access().fileOutput(None, file_deet[1], " Graph")
+                else: 
+                    text,words_linkedlist = MorseCodeTranslator().decode(file_deet[0], output_linkedlist=True)
+                    graph = Morse_Frequency().generate_graph(text, stop_words, words_linkedlist)
+                    file_access().fileOutput(graph, file_deet[1], " Graph")
                 
             elif choice == '5':
                 # Advance Menu 1

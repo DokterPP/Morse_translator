@@ -121,16 +121,15 @@ class Morse_Frequency:
         graph += self.print_vertical_bars(keyword_frequencies,words_linkedlist,sorted_keywords)
         return graph
     
-    def print_vertical_bars(numbers,words_linkedlist,sorted_keywords):
+    def print_vertical_bars(self, numbers,words_linkedlist,sorted_keywords):
         bar_print = "" 
         max_height = max(numbers)
-        total_bars_width = sum(numbers)
         num_bars = len(numbers)
-        total_spaces = 60 - total_bars_width  # Assuming the base length is fixed at 60
+        total_spaces = 60 - num_bars  # Assuming the base length is fixed at 60
 
         # Calculate the number of spaces between each bar
         if num_bars > 1:
-            space_between_bars = total_spaces // (num_bars - 1)
+            space_between_bars = total_spaces // (num_bars)
             remaining_spaces = total_spaces % (num_bars - 1)
         else:
             space_between_bars = 0

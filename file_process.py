@@ -52,8 +52,8 @@ class file_access:
             with open(output_file_name, 'w') as file:
                 # Write the contents to the file
                 if file_contents == None:
-                    print(f"{bcolors.FAIL}File processing failed. Please check the input file contents. Illegal characters found. Use file checker to check for illegal characters.{bcolors.ENDC}")
-                    file_contents = "File processing failed. Please check the input file contents. Illegal characters found. Use file checker to check for illegal characters."
+                    print(f"{bcolors.FAIL}File processing failed. Please check the input file contents. Illegal characters found or wrong text file used. Use file checker to check for illegal characters.{bcolors.ENDC}")
+                    file_contents = "File processing failed. Please check the input file contents. Illegal characters found or wrong text file used. Use file checker to check for illegal characters."
                     file.write(file_contents)
                     self.__confirm()
                 else:
