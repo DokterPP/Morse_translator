@@ -45,7 +45,38 @@ class MorseCodeLinkedList:
             while current.next:
                 current = current.next
             current.next = new_node
+    
+    def sort_by_keywords(self, sorted_keywords):
+        # Create a dictionary to store the index of each word in the sorted_keywords list
+        keyword_index = {word: index for index, (word, _) in enumerate(sorted_keywords)}
+
+        # Create a list to store the nodes corresponding to each word in the linked list
+        nodes = []
+
+        # Traverse the linked list and populate the 'nodes' list
+        current = self.head
+        while current:
+            nodes.append(current)
+            current = current.next
+
+        # Sort the 'nodes' list based on the index of each word in sorted_keywords
+        nodes.sort(key=lambda node: keyword_index.get(node.word, float('inf')))
+
+        # Reconstruct the linked list based on the sorted nodes
+        new_head = None
+        for i, node in enumerate(nodes):
+            if i == 0:
+                new_head = node
+            if i < len(nodes) - 1:
+                node.next = nodes[i + 1]
+            else:
+                node.next = None
             
+        # Return the new head of the linked list
+        #print the sorted linked list
+        self.head = new_head
+        return new_head
+        
     def report_generation_method(self):
         current = self.head
         num_bars = self.get_size()

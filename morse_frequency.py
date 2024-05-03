@@ -105,12 +105,11 @@ class Morse_Frequency:
         
         # Sort keywords by frequency
         sorted_keywords = sorted(keywords.items(), key=lambda x: (-x[1], x[0]))
-        # Extract the frequencies of the keywords
         keyword_frequencies = [freq for _, freq in sorted_keywords]
         # Remove words in the linked list that are not in the keywords (if needed)
-
-            
         
+            
+        print(sorted_keywords)
         print(keyword_frequencies)
         # Construct the graph
         graph = f"""\
@@ -119,11 +118,11 @@ class Morse_Frequency:
 {"*" * 42}
 
 """     
-        
-        print_vertical_bars(keyword_frequencies,words_linkedlist)
+
+        print_vertical_bars(keyword_frequencies,words_linkedlist,sorted_keywords)
         return graph
     
-def print_vertical_bars(numbers,words_linkedlist):
+def print_vertical_bars(numbers,words_linkedlist,sorted_keywords):
     
     max_height = max(numbers)
     total_bars_width = sum(numbers)
@@ -159,6 +158,7 @@ def print_vertical_bars(numbers,words_linkedlist):
 
     # Print fixed length base
     print("-" * 60)
+    words_linkedlist.sort_by_keywords(sorted_keywords)
     words_linkedlist.report_generation_method()
 
 
