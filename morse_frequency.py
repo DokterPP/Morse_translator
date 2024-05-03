@@ -118,51 +118,51 @@ class Morse_Frequency:
 
 """     
 
-        graph += print_vertical_bars(keyword_frequencies,words_linkedlist,sorted_keywords)
+        graph += self.print_vertical_bars(keyword_frequencies,words_linkedlist,sorted_keywords)
         return graph
     
-def print_vertical_bars(numbers,words_linkedlist,sorted_keywords):
-    bar_print = "" 
-    max_height = max(numbers)
-    total_bars_width = sum(numbers)
-    num_bars = len(numbers)
-    total_spaces = 60 - total_bars_width  # Assuming the base length is fixed at 60
-    
-    # Calculate the number of spaces between each bar
-    if num_bars > 1:
-        space_between_bars = total_spaces // (num_bars - 1)
-        remaining_spaces = total_spaces % (num_bars - 1)
-    else:
-        space_between_bars = 0
-        remaining_spaces = total_spaces
+    def print_vertical_bars(numbers,words_linkedlist,sorted_keywords):
+        bar_print = "" 
+        max_height = max(numbers)
+        total_bars_width = sum(numbers)
+        num_bars = len(numbers)
+        total_spaces = 60 - total_bars_width  # Assuming the base length is fixed at 60
 
-    # Iterate through each position vertically
-    for i in range(max_height, 0, -1):
-        # Iterate through each number in the list
+        # Calculate the number of spaces between each bar
+        if num_bars > 1:
+            space_between_bars = total_spaces // (num_bars - 1)
+            remaining_spaces = total_spaces % (num_bars - 1)
+        else:
+            space_between_bars = 0
+            remaining_spaces = total_spaces
 
-        for j, num in enumerate(numbers):
-            if num >= i:
-                bar_print += "*"
-            else:
-                bar_print += " "
+        # Iterate through each position vertically
+        for i in range(max_height, 0, -1):
+            # Iterate through each number in the list
 
-            # Add extra spaces between bars
-            if j < num_bars - 1:
-                num_spaces = space_between_bars + (1 if remaining_spaces > 0 else 0)
-                bar_print += " " * num_spaces
-                remaining_spaces -= 1 if remaining_spaces > 0 else 0
-        
-        # Move to the next line after printing each row
-        bar_print += "\n"
-        
-    # Print fixed length base
-    bar_print += "-" * 60 + "\n"
-    
-    words_linkedlist.sort_by_keywords(sorted_keywords)
-    word_print =  words_linkedlist.report_generation_method()
-    graph = bar_print + word_print
-    
-    return graph
-    
+            for j, num in enumerate(numbers):
+                if num >= i:
+                    bar_print += "*"
+                else:
+                    bar_print += " "
+
+                # Add extra spaces between bars
+                if j < num_bars - 1:
+                    num_spaces = space_between_bars + (1 if remaining_spaces > 0 else 0)
+                    bar_print += " " * num_spaces
+                    remaining_spaces -= 1 if remaining_spaces > 0 else 0
+
+            # Move to the next line after printing each row
+            bar_print += "\n"
+
+        # Print fixed length base
+        bar_print += "-" * 60 + "\n"
+
+        words_linkedlist.sort_by_keywords(sorted_keywords)
+        word_print =  words_linkedlist.report_generation_method()
+        graph = bar_print + word_print
+
+        return graph
+
 
  
