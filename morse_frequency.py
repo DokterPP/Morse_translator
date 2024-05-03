@@ -89,7 +89,7 @@ class Morse_Frequency:
 
     def generate_graph(self, decoded_morse, stop_words, words_linkedlist):
         # Time stamp
-        print(decoded_morse)
+
         words_linkedlist.set_list(words_linkedlist)  # Update the linked list properly
         
         timestamp = datetime.now().strftime("%d-%m-%Y %H:%M")
@@ -109,21 +109,20 @@ class Morse_Frequency:
         # Remove words in the linked list that are not in the keywords (if needed)
         
             
-        print(sorted_keywords)
-        print(keyword_frequencies)
+
         # Construct the graph
         graph = f"""\
-{"*" * 42}
-   REPORT GENERATED ON: {timestamp}
-{"*" * 42}
+{"*" * 60}
+         REPORT GENERATED ON: {timestamp}
+{"*" * 60}
 
 """     
 
-        print_vertical_bars(keyword_frequencies,words_linkedlist,sorted_keywords)
+        graph += print_vertical_bars(keyword_frequencies,words_linkedlist,sorted_keywords)
         return graph
     
 def print_vertical_bars(numbers,words_linkedlist,sorted_keywords):
-    
+    bar_print = "" 
     max_height = max(numbers)
     total_bars_width = sum(numbers)
     num_bars = len(numbers)
@@ -143,23 +142,27 @@ def print_vertical_bars(numbers,words_linkedlist,sorted_keywords):
 
         for j, num in enumerate(numbers):
             if num >= i:
-                print("*", end="")
+                bar_print += "*"
             else:
-                print(" ", end="")
+                bar_print += " "
 
             # Add extra spaces between bars
             if j < num_bars - 1:
                 num_spaces = space_between_bars + (1 if remaining_spaces > 0 else 0)
-                print(" " * num_spaces, end="")
+                bar_print += " " * num_spaces
                 remaining_spaces -= 1 if remaining_spaces > 0 else 0
         
         # Move to the next line after printing each row
-        print()
-
+        bar_print += "\n"
+        
     # Print fixed length base
-    print("-" * 60)
+    bar_print += "-" * 60 + "\n"
+    
     words_linkedlist.sort_by_keywords(sorted_keywords)
-    words_linkedlist.report_generation_method()
-
+    word_print =  words_linkedlist.report_generation_method()
+    graph = bar_print + word_print
+    
+    return graph
+    
 
  

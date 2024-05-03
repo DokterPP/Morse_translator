@@ -57,7 +57,6 @@ def main():
                 
                 file_deet = file_access().fileInput()
                 text,words_linkedlist = MorseCodeTranslator().decode(file_deet[0], output_linkedlist=True)
-                print(words_linkedlist)
                 graph = Morse_Frequency().generate_graph(text, stop_words, words_linkedlist)
                 file_access().fileOutput(graph, file_deet[1], " Graph")
                 
