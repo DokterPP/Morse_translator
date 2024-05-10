@@ -9,7 +9,7 @@ from file_process import file_access
 from format import Format
 from morse_frequency import Morse_Frequency
 from colors import bcolors
-
+from charmap_instance import dsCharmap
 
 def main():
     """
@@ -23,9 +23,11 @@ def main():
                      "Generate Morse Word Frequencies Report",
                      "Generate Morse Keyword Frequencies Graph",
                      "Format File for Conversion (Advanced Options)",
-                     "Extra Option Two",    
+                     "Dictionary Management (Advanced Options)",    
                      "Exit", ])
     input("Press Enter, to continue....")
+    
+    dsCharmap
     exitApp = False
     while not exitApp:
         choice = False
@@ -68,7 +70,7 @@ def main():
                 
                 advanceMenu = Menu(
                     f"Please select your choice: ({','.join([str(x+1) for x in range(4)])})", True)
-                advanceList = ["Prepare file for Morse to Text Conversion ( All Morse )", "Prepare file for Text to Morse Conversion ( All Text )","Illegal characters check","Back to Main Menu"]
+                advanceList = ["Prepare file for Morse to Text Conversion ( All Morse )", "Prepare file for Text to Morse Conversion ( All Text )","File illegal characters check","Back to Main Menu"]
                 advanceMenu.insert(advanceList)
                 advanceValid = False
                 while not advanceValid:
@@ -79,7 +81,7 @@ def main():
                         advanceValid = True
                         continue
                     elif advanceChoice.isnumeric() and advanceChoice not in ["1", "2", "3"]:
-                        print(f"{bcolors.WARNING}\nOnly options between 1 to 3 are available. Please try again!{bcolors.ENDC}")
+                        print(f"{bcolors.WARNING}\nOnly options between 1 to 4 are available. Please try again!{bcolors.ENDC}")
                         advanceValid = False
                         continue
                     elif advanceChoice not in ["1", "2", "3"]:
@@ -104,7 +106,7 @@ def main():
                         
                         checkMenu = Menu(
                         f"Please select your choice: ({','.join([str(x+1) for x in range(3)])})", True)
-                        checkList = ["Check for Illegal characters", "Clear Illegal characters", "Back to Main Menu"]
+                        checkList = ["Check for Illegal characters in file", "Clear Illegal characters in file", "Back to Main Menu"]
                         checkMenu.insert(checkList)
                         checkValid = False
                         while not checkValid:
@@ -142,10 +144,74 @@ def main():
 
 
             elif choice == '6':
-                print("\nYou have selected: Extra Option Two")
-                input("Press Enter, to continue....")
-                choice = False
-                
+                advanceMenu2 = Menu(
+                    f"Please select your choice: ({','.join([str(x+1) for x in range(7)])})", True)
+                advanceList2 = ["Add/Remove characters from dictionary", "Check character legality","Display Dictionary","Save current Dictionary","Reset to default dictionary","Change Dictionaries","Back to Main Menu"]
+                advanceMenu2.insert(advanceList2)
+                advanceValid2 = False
+                while not advanceValid2:
+                    advanceMenu2.show()
+                    advanceChoice2 = input("Enter choice: ")
+                    # input validation
+                    if advanceChoice2 == "7":
+                        advanceValid2 = True
+                        continue
+                    elif advanceChoice2.isnumeric() and advanceChoice2 not in ["1", "2", "3", "4", "5", "6", "7"]:
+                        print(f"{bcolors.WARNING}\nOnly options between 1 to 7 are available. Please try again!{bcolors.ENDC}")
+                        advanceValid2 = False
+                        continue
+                    elif advanceChoice2 not in ["1", "2", "3", "4", "5", "6", "7"]:
+                        print(f"{bcolors.WARNING}\nYou must enter a number. Please try again!{bcolors.ENDC}")
+                        advanceValid2 = False
+                        continue
+                    advanceValid2 = True
+
+                    if advanceChoice2 == "1":
+                        
+                        addMenu = Menu(
+                        f"Please select your choice: ({','.join([str(x+1) for x in range(3)])})", True)
+                        addList = ["Add Character", "Remove Character", "Back to Main Menu"]
+                        addMenu.insert(addList)
+                        addValid = False
+                        while not addValid:
+                            addMenu.show()
+                            addChoice = input("Enter choice: ")
+                            # input validation
+                            if addChoice == "3":
+                                addValid = True
+                                continue
+                            elif addChoice.isnumeric() and addChoice not in ["1", "2", "3"]:
+                                print(f"{bcolors.WARNING}\nOnly options between 1 to 3 are available. Please try again!{bcolors.ENDC}")
+                                addValid = False
+                                continue
+                            elif addChoice not in ["1", "2", "3"]:
+                                print(f"{bcolors.WARNING}\nYou must enter a number. Please try again!{bcolors.ENDC}")
+                                addValid = False
+                                continue
+                            addValid = True
+                            
+                            if addChoice == "1":
+                                dsCharmap.insert()
+                                
+                            if addChoice == "2":
+                                dsCharmap.remove()
+                                       
+                    elif advanceChoice2 == "2":
+                        dsCharmap.search()
+                            
+                    elif advanceChoice2 == "3":
+                        dsCharmap.print_dict()
+                        
+                    elif advanceChoice2 == "4":
+                        dsCharmap.update()
+                                              
+                    elif advanceChoice2 == "5":
+                        dsCharmap.reset()
+                        
+                    elif advanceChoice2 == "6":
+                        dsCharmap.change()
+                        
+
             elif choice == '7':
                 print(
                     '\nBye, thanks for using ST1507 DSAA: MorseCode Message Analyzer\n')

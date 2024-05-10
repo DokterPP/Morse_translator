@@ -1,3 +1,9 @@
+import json
+from dictionary_management import Charmap
+from charmap_instance import dsCharmap
+
+
+
 class LinkedList_Node:
     def __init__(self, morse_code, word):
         self.morse_code = morse_code
@@ -48,7 +54,7 @@ class MorseCodeLinkedList:
     
     def sort_by_keywords(self, sorted_keywords):
         # Create a dictionary to store the index of each word in the sorted_keywords list
-        keyword_index = {word: index for index, (word, _) in enumerate(sorted_keywords)}
+        keyword_index = {word: index for index, word in enumerate(sorted_keywords)}
 
         # Create a list to store the nodes corresponding to each word in the linked list
         nodes = []
@@ -170,15 +176,16 @@ class MorseCodeLinkedList:
 
 class MorseCodeTranslator:
     def __init__(self):
-        self.morse_dict = {
-            'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---',
-            'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
-            'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..',
-            '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
-            '6': '-....', '7': '--...', '8': '---..', '9': '----.', '?': '..--..', "'": '.----.', '!': '-.-.--', '/': '-..-.', '(': '-.--.', ')': '-.--.-',
-            '&': '.-...', ':': '---...', ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '_': '..--.-', '"': '.-..-.',
-            '$': '...-..-', '@': '.--.-.'
-        }
+        self.morse_dict = dsCharmap.dict
+        # {
+        #     'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---',
+        #     'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
+        #     'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..',
+        #     '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
+        #     '6': '-....', '7': '--...', '8': '---..', '9': '----.', '?': '..--..', "'": '.----.', '!': '-.-.--', '/': '-..-.', '(': '-.--.', ')': '-.--.-',
+        #     '&': '.-...', ':': '---...', ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '_': '..--.-', '"': '.-..-.',
+        #     '$': '...-..-', '@': '.--.-.'
+        # }
         self.morse_tree = self.__build_morse_tree()
 
     class Node:

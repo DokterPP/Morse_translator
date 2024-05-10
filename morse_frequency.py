@@ -1,9 +1,53 @@
 from datetime import datetime
-from translation import MorseCodeTranslator, MorseCodeLinkedList
+from translation import MorseCodeTranslator
 import os
 
+class Node:
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
 
+class SortedList:
+    def __init__(self):
+        self.head = None
 
+    def insert(self, item):
+        node = Node(item)
+        if self.head is None or node.data < self.head.data:
+            node.next = self.head
+            self.head = node
+        else:
+            curr = self.head
+            while curr.next is not None and curr.next.data < node.data:
+                curr = curr.next
+            node.next = curr.next
+            curr.next = node
+
+    def get_list(self):
+        curr = self.head
+        items = []
+        while curr:
+            items.append(curr.data)
+            curr = curr.next
+        return items
+
+    def __str__(self):
+        return ', '.join(str(item) for item in self.get_list())
+
+class keyword:
+    def __init__(self, word, frequency):
+        self.word = word
+        self.frequency = frequency
+
+    def __lt__(self, other):
+        if self.frequency == other.frequency:
+            return self.word.lower() < other.word.lower()
+        else:
+            return self.frequency > other.frequency
+
+    def __str__(self):
+        return "'" + self.word + "': " + str(self.frequency)
+    
 class Morse_Frequency:
     def __init__(self):
         self.current_directory = os.path.dirname(__file__)
@@ -104,11 +148,17 @@ class Morse_Frequency:
         words_linkedlist.print_list(words_linkedlist)  # Print the updated linked list
         
         # Sort keywords by frequency
-        sorted_keywords = sorted(keywords.items(), key=lambda x: (-x[1], x[0]))
-        keyword_frequencies = [freq for _, freq in sorted_keywords]
-        # Remove words in the linked list that are not in the keywords (if needed)
-        
-            
+        # sorted_keywords = sorted(keywords.items(), key=lambda x: (-x[1], x[0])) 
+
+        # testing sorted list using sorted list class
+        l = SortedList()
+        # Populate a list with keyword objects
+        for word , frequency in keywords.items():
+            l.insert(keyword(word, frequency))   
+        keyword_frequencies = [item.frequency for item in l.get_list()]
+        sorted_keywords = [item.word for item in l.get_list()]
+ 
+ 
 
         # Construct the graph
         graph = f"""\
@@ -125,7 +175,7 @@ class Morse_Frequency:
         bar_print = "" 
         max_height = max(numbers)
         num_bars = len(numbers)
-        total_spaces = 60 - num_bars  # Assuming the base length is fixed at 60
+        total_spaces = 60 - num_bars  # base length is fixed at 60
 
         # Calculate the number of spaces between each bar
         if num_bars > 1:
