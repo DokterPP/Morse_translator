@@ -51,3 +51,6 @@
         - Back to Main Menu
         
     - Exit
+
+
+### To use the application, move text files from testing_text_files to the working directory (with main.py) 
