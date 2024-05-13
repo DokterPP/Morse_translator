@@ -27,7 +27,7 @@ def write_morse_code_to_wav(morse_code, filename):
             morse_sound = np.append(morse_sound, np.zeros(rate//3))  # 333ms silence
             
         elif symbol == ',':
-            morse_sound = np.append(morse_sound, np.zeros(rate//100))   # 10ms silence
+            morse_sound = np.append(morse_sound, np.zeros(rate//3))   # 333ms silence
             
     wavio.write(filename, morse_sound, rate, sampwidth=3)
 
