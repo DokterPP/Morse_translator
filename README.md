@@ -20,7 +20,7 @@
 
             - Clear Illegal characters in file
 
-            - Clear Illegal characters in file
+            - Back to Main Menu
 
         - Back to Main Menu
 
