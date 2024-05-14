@@ -241,7 +241,6 @@ class MorseCodeTranslator:
         if output_linkedlist:
             morse_linkedlist = MorseCodeLinkedList()
         #add decoded word and morse code to linked list if output_linkedlist is True
-        
         for line in lines:
             if not line.strip():
                 continue

@@ -5,7 +5,7 @@ class file_access:
     def __init__(self):
         self.current_directory = os.path.dirname(__file__)
     
-    def fileInput(self): 
+    def fileInput(self, audio=False): 
         while True:
             # Prompt for input file name
             input_file_name = input('\n'+"Please enter input file name: ")
@@ -22,8 +22,14 @@ class file_access:
                         if output_file_name.endswith('.txt'):
                             output_file_path = os.path.join(self.current_directory, output_file_name)
                             return file_contents, output_file_path
+                        elif audio == True and output_file_name.endswith('.wav'):
+                            output_file_path = os.path.join(self.current_directory, output_file_name)
+                            return file_contents, output_file_path
                         else:
-                            print(f"{bcolors.WARNING}Invalid output file name. Output file must end with .txt.{bcolors.ENDC}")
+                            if audio == True:
+                                print(f"{bcolors.WARNING}Invalid output file name. Output file must end with .wav.{bcolors.ENDC}")
+                            else:
+                                print(f"{bcolors.WARNING}Invalid output file name. Output file must end with .txt.{bcolors.ENDC}")
                 else:
                     print(f"{bcolors.FAIL}File processing failed. Please check the input file contents.{bcolors.ENDC}")
             else:

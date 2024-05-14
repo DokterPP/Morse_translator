@@ -10,20 +10,22 @@ from format import Format
 from morse_frequency import Morse_Frequency
 from colors import bcolors
 from charmap_instance import dsCharmap
+from audio import MorseCodeWav
 
 def main():
     """
     Use the Menu class to create a menu object
     """
     mainMenu = Menu(
-        f"\n Please select your choice: ({','.join([str(x+1) for x in range(7)])})", True)
+        f"\n Please select your choice: ({','.join([str(x+1) for x in range(8)])})", True)
     mainMenu.showBanner()
     mainMenu.insert(["Convert Text To Morse Code",
                      "Convert Morse Code To Text",
                      "Generate Morse Word Frequencies Report",
                      "Generate Morse Keyword Frequencies Graph",
                      "Format File for Conversion (Advanced Options)",
-                     "Dictionary Management (Advanced Options)",    
+                     "Dictionary Management (Advanced Options)",
+                     "Morse Audio Conversion (experiment)",    
                      "Exit", ])
     input("Press Enter, to continue....")
     
@@ -211,13 +213,16 @@ def main():
                     elif advanceChoice2 == "6":
                         dsCharmap.change()
                         
-
             elif choice == '7':
+                file_deet = file_access().fileInput(True)
+                MorseCodeWav().convert_to_wav(file_deet[0], file_deet[1])
+            
+            elif choice == '8':
                 print(
                     '\nBye, thanks for using ST1507 DSAA: MorseCode Message Analyzer\n')
                 exit()
             elif choice.isnumeric():
-                print(f"{bcolors.WARNING}\nOnly options between 1 to 7 are available. Please try again!{bcolors.ENDC}")
+                print(f"{bcolors.WARNING}\nOnly options between 1 to 8 are available. Please try again!{bcolors.ENDC}")
                 choice = False
             else:
                 print(f"{bcolors.WARNING}\nYou must enter a number. Please try again!{bcolors.ENDC}")
