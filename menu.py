@@ -15,12 +15,11 @@ class Menu:
     4. fileInput(): Reads the contents of a file and returns it as a string
     """
 
-    def __init__(self, prompt, order, options=None):
+    def __init__(self, prompt, order):
         self.prompt = prompt
         self.order = order
         self.items = []
         self.length = 0
-        self.options = options
         return
 
     def insert(self, items: list):

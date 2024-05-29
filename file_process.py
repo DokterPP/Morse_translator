@@ -27,13 +27,13 @@ class file_access:
                             return file_contents, output_file_path
                         else:
                             if audio == True:
-                                print(f"{bcolors.WARNING}Invalid output file name. Output file must end with .wav.{bcolors.ENDC}")
+                                print(f"{bcolors.WARNING}\nInvalid output file name. Output file must end with .wav.{bcolors.ENDC}")
                             else:
-                                print(f"{bcolors.WARNING}Invalid output file name. Output file must end with .txt.{bcolors.ENDC}")
+                                print(f"{bcolors.WARNING}\nInvalid output file name. Output file must end with .txt.{bcolors.ENDC}")
                 else:
-                    print(f"{bcolors.FAIL}File processing failed. Please check the input file contents.{bcolors.ENDC}")
+                    print(f"{bcolors.FAIL}\nFile processing failed. Please check the input file contents.{bcolors.ENDC}")
             else:
-                print(f"{bcolors.WARNING}Invalid input file name or file does not exist. Please enter a valid .txt file.{bcolors.ENDC}")
+                print(f"{bcolors.WARNING}\nInvalid input file name or file does not exist. Please enter a valid .txt file.{bcolors.ENDC}")
 
             
 
@@ -58,7 +58,7 @@ class file_access:
             with open(output_file_name, 'w') as file:
                 # Write the contents to the file
                 if file_contents == None:
-                    print(f"{bcolors.FAIL}File processing failed. Please check the input file contents. Illegal characters found or wrong text file used. Use file checker to check for illegal characters.{bcolors.ENDC}")
+                    print(f"{bcolors.FAIL}\nFile processing failed. Please check the input file contents. Illegal characters found or wrong text file used. Use file checker to check for illegal characters.{bcolors.ENDC}")
                     file_contents = "File processing failed. Please check the input file contents. Illegal characters found or wrong text file used. Use file checker to check for illegal characters."
                     file.write(file_contents)
                     self.__confirm()
@@ -66,7 +66,7 @@ class file_access:
                     file.write(file_contents)
                     self.__confirm(confirm_message)
         except Exception as e:
-            print(f"{bcolors.FAIL}An error occurred: {str(e)} {bcolors.ENDC}")
+            print(f"{bcolors.FAIL}\nAn error occurred: {str(e)} {bcolors.ENDC}")
             return None      
 
     def __confirm(self, message=None):
