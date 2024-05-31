@@ -35,7 +35,30 @@ class file_access:
             else:
                 print(f"{bcolors.WARNING}\nInvalid input file name or file does not exist. Please enter a valid .txt file.{bcolors.ENDC}")
 
-            
+    class FileProcessor:
+        def __init__(self):
+            self.current_directory = os.path.dirname(__file__)
+
+        def processRead(self, file_input_path):
+            try:
+                with open(file_input_path, 'r') as file:
+                    file_contents = file.read()
+                    return file_contents
+            except FileNotFoundError:
+                print(f"Error: The file '{file_input_path}' does not exist.")
+
+    class TextFileProcessor(FileProcessor):
+        def processRead(self, file_input_path):
+            file_contents = super().processRead(file_input_path)
+            # Additional processing specific to text files
+            return file_contents
+
+    class AudioFileProcessor(FileProcessor):
+        def processRead(self, file_input_path):
+            file_contents = super().processRead(file_input_path)
+            # Additional processing specific to audio files
+            return file_contents       
+        
 
     def __processRead(self, file_input_path):
         try:
