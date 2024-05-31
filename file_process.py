@@ -1,66 +1,14 @@
 import os
 from colors import bcolors
 
-class file_access:
-    def __init__(self):
-        self.current_directory = os.path.dirname(__file__)
     
-    def fileInput(self, audio=False): 
-        while True:
-            # Prompt for input file name
-            input_file_name = input('\n'+"Please enter input file name: ")
-            file_input_path = os.path.join(self.current_directory, input_file_name)
 
-            # Check if input file exists and is a .txt file
-            if os.path.exists(file_input_path) and input_file_name.endswith('.txt'):
-                # Process input file contents
-                file_contents = self.__processRead(file_input_path)
-                if file_contents is not None:
-                    # Prompt for output file name
-                    while True:
-                        output_file_name = input("Please enter output file name: ")
-                        if output_file_name.endswith('.txt'):
-                            output_file_path = os.path.join(self.current_directory, output_file_name)
-                            return file_contents, output_file_path
-                        elif audio == True and output_file_name.endswith('.wav'):
-                            output_file_path = os.path.join(self.current_directory, output_file_name)
-                            return file_contents, output_file_path
-                        else:
-                            if audio == True:
-                                print(f"{bcolors.WARNING}\nInvalid output file name. Output file must end with .wav.{bcolors.ENDC}")
-                            else:
-                                print(f"{bcolors.WARNING}\nInvalid output file name. Output file must end with .txt.{bcolors.ENDC}")
-                else:
-                    print(f"{bcolors.FAIL}\nFile processing failed. Please check the input file contents.{bcolors.ENDC}")
-            else:
-                print(f"{bcolors.WARNING}\nInvalid input file name or file does not exist. Please enter a valid .txt file.{bcolors.ENDC}")
-
-    class FileProcessor:
-        def __init__(self):
+class file_access:
+    
+    def __init__(self):
             self.current_directory = os.path.dirname(__file__)
 
-        def processRead(self, file_input_path):
-            try:
-                with open(file_input_path, 'r') as file:
-                    file_contents = file.read()
-                    return file_contents
-            except FileNotFoundError:
-                print(f"Error: The file '{file_input_path}' does not exist.")
-
-    class TextFileProcessor(FileProcessor):
-        def processRead(self, file_input_path):
-            file_contents = super().processRead(file_input_path)
-            # Additional processing specific to text files
-            return file_contents
-
-    class AudioFileProcessor(FileProcessor):
-        def processRead(self, file_input_path):
-            file_contents = super().processRead(file_input_path)
-            # Additional processing specific to audio files
-            return file_contents       
-        
-
-    def __processRead(self, file_input_path):
+    def processRead(self, file_input_path):
         try:
             # Open the file in read mode
             with open(file_input_path, 'r') as file:
@@ -73,7 +21,6 @@ class file_access:
         except Exception as e:
             print(f"{bcolors.FAIL}An error occurred: {str(e)} {bcolors.ENDC}")
             return None
-        
         
     def fileOutput(self, file_contents, output_file_name, confirm_message=None):
         try:
@@ -91,13 +38,50 @@ class file_access:
         except Exception as e:
             print(f"{bcolors.FAIL}\nAn error occurred: {str(e)} {bcolors.ENDC}")
             return None      
-
+    
     def __confirm(self, message=None):
         if message is not None:
             print('\n'+ ">" * 4 + message + " generation completed! " +"\n")
         input('\n'+"Press Enter, to continue....")
- 
-                            
-
+        
     
+    def fileInput(self, audio): 
+            while True:
+                # Prompt for input file name
+                input_file_name = input('\n'+"Please enter input file name: ")
+                file_input_path = os.path.join(self.current_directory, input_file_name)
+
+                # Check if input file exists and is a .txt file
+                if os.path.exists(file_input_path) and input_file_name.endswith('.txt'):
+                    # Process input file contents
+                    file_contents = self.processRead(file_input_path)
+                    if file_contents is not None:
+                        # Prompt for output file name
+                        while True:
+                            output_file_name = input("Please enter output file name: ")
+                            if audio == True :
+                                if output_file_name.endswith('.wav'):
+                                    output_file_path = os.path.join(self.current_directory, output_file_name)
+                                    return file_contents, output_file_path
+                                else:
+                                    print(f"{bcolors.WARNING}\nInvalid output file name. Output file must end with .wav.{bcolors.ENDC}")     
+                            elif output_file_name.endswith('.txt'):
+                                output_file_path = os.path.join(self.current_directory, output_file_name)
+                                return file_contents, output_file_path
+                            else:
+                                print(f"{bcolors.WARNING}\nInvalid output file name. Output file must end with .txt.{bcolors.ENDC}")
+                    else:
+                        print(f"{bcolors.FAIL}\nFile processing failed. Please check the input file contents.{bcolors.ENDC}")
+                else:
+                    print(f"{bcolors.WARNING}\nInvalid input file name or file does not exist. Please enter a valid .txt file.{bcolors.ENDC}")
+                   
+class TextFileProcessor(file_access):
+    def fileInput(self):
+            return super().fileInput(audio = False)
+
+class AudioFileProcessor(file_access):
+     def fileInput(self):
+            return super().fileInput(audio = True)
+
+        
 

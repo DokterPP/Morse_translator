@@ -11,6 +11,10 @@ from morse_frequency import Morse_Frequency
 from colors import bcolors
 from charmap_instance import dsCharmap
 from audio import MorseCodeWav
+from file_process import TextFileProcessor
+from file_process import AudioFileProcessor
+
+
 
 def main():
     """
@@ -40,7 +44,7 @@ def main():
             # Main menu validation
             if choice == '1':
                 
-                file_deet = file_access().fileInput()
+                file_deet = TextFileProcessor().fileInput()
                 morse = MorseCodeTranslator().encode(file_deet[0])
                 file_access().fileOutput(morse, file_deet[1])
                 
@@ -214,7 +218,8 @@ def main():
                         dsCharmap.change()
                         
             elif choice == '7':
-                file_deet = file_access().fileInput(True)
+                
+                file_deet = AudioFileProcessor().fileInput()
                 MorseCodeWav().convert_to_wav(file_deet[0], file_deet[1])
             
             elif choice == '8':
