@@ -62,7 +62,7 @@ class Format:
                 check += char
         return check
     
-    #iteravtive approach
+    #iterative approach
     
     # def clearFile(self, file_contents):
     #     clear = ""
