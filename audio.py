@@ -82,7 +82,14 @@ class MorseCodeWav:
 
 
     def convert_to_wav(self, morse_code, filename):
+        for char in morse_code:
+            if char.upper() not in [' ', '\n', ',']:
+                print(f"\nInvalid characters found in morse code. Please check the input file contents. Illegal characters found or wrong text file used. Use file checker to check for illegal characters.")
+                input('\n'+"Press Enter, to continue....")
+                return None
         morse_sound = bytearray()
         self._append_symbols(morse_sound, morse_code)
         self._write_wav_file(filename, morse_sound)
         input('\n'+"Press Enter, to continue....")
+        
+    

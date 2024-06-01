@@ -50,20 +50,20 @@ def main():
                 
             elif choice == '2':
                 
-                file_deet = file_access().fileInput()
+                file_deet = TextFileProcessor().fileInput()
                 text = MorseCodeTranslator().decode(file_deet[0])
                 file_access().fileOutput(text, file_deet[1])
                 
             elif choice == '3':
                 
-                file_deet = file_access().fileInput()
+                file_deet = TextFileProcessor().fileInput()
                 text = MorseCodeTranslator().decode(file_deet[0])
                 report = Morse_Frequency().generate_report(text, stop_words)
                 file_access().fileOutput(report, file_deet[1], " Report")
                 
             elif choice == '4':
                 
-                file_deet = file_access().fileInput()
+                file_deet = TextFileProcessor().fileInput()
                 if MorseCodeTranslator().decode(file_deet[0], output_linkedlist=True) == None:
                     file_access().fileOutput(None, file_deet[1], " Graph")
                 else: 
@@ -98,13 +98,13 @@ def main():
 
                     if advanceChoice == "1":
                         
-                        file_to_be_formated = file_access().fileInput()
+                        file_to_be_formated = TextFileProcessor().fileInput()
                         formated = Format().formatToMorse(file_to_be_formated[0])
                         file_access().fileOutput(formated, file_to_be_formated[1])
                         
                     elif advanceChoice == "2":
                         
-                        file_to_be_formated = file_access().fileInput()
+                        file_to_be_formated = TextFileProcessor().fileInput()
                         formated = Format().formatToText(file_to_be_formated[0])
                         file_access().fileOutput(formated, file_to_be_formated[1])
                         
@@ -134,14 +134,14 @@ def main():
                             
                             if checkChoice == "1":
                                 
-                                file_to_be_formated = file_access().fileInput()
+                                file_to_be_formated = TextFileProcessor().fileInput()
                                 check = Format().checkFile(file_to_be_formated[0])
                                 file_access().fileOutput(check, file_to_be_formated[1])
                             
                             elif checkChoice == "2":
                                     
-                                file_to_be_formated = file_access().fileInput()
-                                formated = Format().clearFile(file_to_be_formated[0])
+                                file_to_be_formated = TextFileProcessor().fileInput()
+                                formated = Format().clearFileWrapper(file_to_be_formated[0])
                                 file_access().fileOutput(formated, file_to_be_formated[1])
                                 
                             else:
@@ -218,7 +218,6 @@ def main():
                         dsCharmap.change()
                         
             elif choice == '7':
-                
                 file_deet = AudioFileProcessor().fileInput()
                 MorseCodeWav().convert_to_wav(file_deet[0], file_deet[1])
             

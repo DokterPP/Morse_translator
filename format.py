@@ -1,5 +1,5 @@
 from charmap_instance import dsCharmap
-
+import sys
 
 class Format:
     def __init__(self):
@@ -62,11 +62,29 @@ class Format:
                 check += char
         return check
     
-    def clearFile(self, file_contents):
-        clear = ""
-        for char in file_contents:
-            if char.upper() not in self.morse_dict and char.upper() not in [' ', '\n', ',']:
-                continue
-            else:
+    #iteravtive approach
+    
+    # def clearFile(self, file_contents):
+    #     clear = ""
+    #     for char in file_contents:
+    #         if char.upper() not in self.morse_dict and char.upper() not in [' ', '\n', ',']:
+    #             continue
+    #         else:
+    #             clear += char
+    #     return clear
+    
+    #recursive approach
+    
+    def clearFileWrapper(self, file_contents):
+        
+        sys.setrecursionlimit(len(file_contents) + 10)  
+        return self.clearFile(file_contents)
+
+    def clearFile(self, file_contents, index=0, clear=""):
+        if index == len(file_contents):
+            return clear
+        else:
+            char = file_contents[index]
+            if char.upper() in self.morse_dict or char.upper() in [' ', '\n', ',']:
                 clear += char
-        return clear
+            return self.clearFile(file_contents, index + 1, clear)
