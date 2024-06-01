@@ -44,8 +44,7 @@ class file_access:
             print('\n'+ ">" * 4 + message + " generation completed! " +"\n")
         input('\n'+"Press Enter, to continue....")
         
-    
-    def fileInput(self, audio): 
+    def fileInput(self): 
             while True:
                 # Prompt for input file name
                 input_file_name = input('\n'+"Please enter input file name: ")
@@ -55,33 +54,34 @@ class file_access:
                 if os.path.exists(file_input_path) and input_file_name.endswith('.txt'):
                     # Process input file contents
                     file_contents = self.processRead(file_input_path)
-                    if file_contents is not None:
+                    if file_contents != '':
                         # Prompt for output file name
-                        while True:
-                            output_file_name = input("Please enter output file name: ")
-                            if audio == True :
-                                if output_file_name.endswith('.wav'):
-                                    output_file_path = os.path.join(self.current_directory, output_file_name)
-                                    return file_contents, output_file_path
-                                else:
-                                    print(f"{bcolors.WARNING}\nInvalid output file name. Output file must end with .wav.{bcolors.ENDC}")     
-                            elif output_file_name.endswith('.txt'):
-                                output_file_path = os.path.join(self.current_directory, output_file_name)
-                                return file_contents, output_file_path
-                            else:
-                                print(f"{bcolors.WARNING}\nInvalid output file name. Output file must end with .txt.{bcolors.ENDC}")
-                    else:
+                        return file_contents
+                    else:   
                         print(f"{bcolors.FAIL}\nFile processing failed. Please check the input file contents.{bcolors.ENDC}")
                 else:
-                    print(f"{bcolors.WARNING}\nInvalid input file name or file does not exist. Please enter a valid .txt file.{bcolors.ENDC}")
+                   print(f"{bcolors.WARNING}\nInvalid input file name or file does not exist. Please enter a valid .txt file.{bcolors.ENDC}")
+                    
                    
 class TextFileProcessor(file_access):
     def fileInput(self):
-            return super().fileInput(audio = False)
+        file_contents = super().fileInput()
+        while True:
+            output_file_name = input("Please enter output file name: ")
+            if output_file_name.endswith('.txt'):
+                output_file_path = os.path.join(self.current_directory, output_file_name)
+                return file_contents, output_file_path
+            else:
+                 print(f"{bcolors.WARNING}\nInvalid output file name. Output file must end with .txt.{bcolors.ENDC}")
 
 class AudioFileProcessor(file_access):
      def fileInput(self):
-            return super().fileInput(audio = True)
-
-        
+        file_contents = super().fileInput()
+        while True:
+            output_file_name = input("Please enter output file name: ")
+            if output_file_name.endswith('.wav'):
+                output_file_path = os.path.join(self.current_directory, output_file_name)
+                return file_contents, output_file_path
+            else:
+                 print(f"{bcolors.WARNING}\nInvalid output file name. Output file must end with .wav.{bcolors.ENDC}")
 

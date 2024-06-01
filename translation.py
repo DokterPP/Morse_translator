@@ -132,7 +132,8 @@ class MorseCodeLinkedList:
     # access word portion of linked list
     def remove_existence(self, stop_words):
         # Set to keep track of unique words
-        unique_words = set()
+        unique_words = set() # set is good because it is faster to check if a word is in a set than a list 
+        # and it does not allow duplicates
         
         # Iterate through linked list and remove words that are not in stop_words
         current = self.head
@@ -165,27 +166,13 @@ class MorseCodeLinkedList:
         # Make sure to update linkedlist.head if the head was removed
         MorseCodeLinkedList.linkedlist = self
 
-    
-    def print_list(self,linkedlist):
-        current = linkedlist.head
-        while current:
-            # print(f"{current.morse_code} => {current.word}")
-            current = current.next
             
 
 
 class MorseCodeTranslator:
     def __init__(self):
         self.morse_dict = dsCharmap.dict
-        # {
-        #     'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.', 'G': '--.', 'H': '....', 'I': '..', 'J': '.---',
-        #     'K': '-.-', 'L': '.-..', 'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
-        #     'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-', 'Y': '-.--', 'Z': '--..',
-        #     '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-', '5': '.....',
-        #     '6': '-....', '7': '--...', '8': '---..', '9': '----.', '?': '..--..', "'": '.----.', '!': '-.-.--', '/': '-..-.', '(': '-.--.', ')': '-.--.-',
-        #     '&': '.-...', ':': '---...', ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '_': '..--.-', '"': '.-..-.',
-        #     '$': '...-..-', '@': '.--.-.'
-        # }
+
         self.morse_tree = self.__build_morse_tree()
 
     class Node:

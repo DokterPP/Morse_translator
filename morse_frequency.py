@@ -145,7 +145,6 @@ class Morse_Frequency:
         
         # Remove words in the linked list that are not in the keywords
         words_linkedlist.remove_existence(stop_words)  # Pass stop_words to the method
-        words_linkedlist.print_list(words_linkedlist)  # Print the updated linked list
         
         # Sort keywords by frequency
         # sorted_keywords = sorted(keywords.items(), key=lambda x: (-x[1], x[0])) 
