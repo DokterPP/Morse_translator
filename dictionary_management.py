@@ -20,7 +20,7 @@ class Charmap:
         else:    
             self.dict = self.data['Dict']
             self.custom = self.data['Custom']
-            self.fill_dict(self.dict)
+            self.__fill_dict(self.dict)
         
     
     def __read_dict(self, file):
@@ -35,13 +35,13 @@ class Charmap:
             print(f"The file {file} does not exist.")
             return None
         
-    
+
     def __write_dict(self, file, data):
         folder_path = 'dictionaries/'
         with open(folder_path+file, 'w') as file:
             json.dump(data, file)
     
-    def fill_dict(self ,data):
+    def __fill_dict(self ,data):
         for key, value in data.items():
             self.__mass_insert(key, value)
         
@@ -69,7 +69,7 @@ class Charmap:
         else:
             while True:
                 char = input("\nEnter character to add: ")
-                if not re.match("^[A-Za-z!?@#$%&*()+=]$", char):
+                if not re.match("^[A-Za-z0-9!?@#$%&*()+=]$", char):
                     print("Invalid input. Please enter a single character.")
                     continue
                 char = char.upper()
@@ -78,8 +78,8 @@ class Charmap:
                     input('\n'+"Press Enter, to continue....")
                     continue
                 morse = input("Enter morse code: ")
-                if not re.match("^[.-]+$", morse):
-                    print("Invalid input. Morse code can only contain dots (.) and dashes (-).")
+                if not re.match("^[.-]+$", morse) or len(morse) > 7:
+                    print("Invalid input. Morse code can only contain dots (.) and dashes (-) and not more than 7 characters.")
                     continue
                 index = self.size
                 self.arr.append((char, morse))
@@ -103,19 +103,15 @@ class Charmap:
                     while True:
                         confirm = str(input(f"\nAre you sure you want to remove {char}? (y/n): "))
                         if confirm.lower() == 'y':
-                            index = self.map[char]
+                            # Remove the character from the dictionary using list comprehension
+                            self.arr = [pair for pair in self.arr if pair[0] != char]
                             del self.map[char]
-                            if index != self.size - 1:
-                                last = self.size - 1
-                                self.arr[index], self.arr[last] = self.arr[last], self.arr[index]
-                                if last != index:
-                                    self.map[self.arr[index][0]] = index
-                            self.arr.pop()
                             self.size -= 1
-                            self.__sort()
+                            self.arr = self.__merge_sort(self.arr)
                             removed = True
                             self.custom = "True"
                             break
+                            
                         elif confirm.lower() == 'n':
                             break
                         else:
@@ -147,59 +143,65 @@ class Charmap:
             print("\nDictionary updated successfully.")
             input('\n'+"Press Enter, to continue....")
     
-    def __sort(self):
-        # Bubble sort
-        for i in range(self.size):
-            for j in range(0, self.size - i - 1):
-                if self.arr[j][0] > self.arr[j + 1][0]:
-                    self.arr[j], self.arr[j + 1] = self.arr[j + 1], self.arr[j]
-                    self.map[self.arr[j][0]], self.map[self.arr[j + 1][0]] = j, j + 1
+    
+    # less efficient bubble sort method
+    # def __sort(self):
+    #     # Bubble sort
+    #     for i in range(self.size):
+    #         for j in range(0, self.size - i - 1):
+    #             if self.arr[j][0] > self.arr[j + 1][0]:
+    #                 self.arr[j], self.arr[j + 1] = self.arr[j + 1], self.arr[j]
+    #                 self.map[self.arr[j][0]], self.map[self.arr[j + 1][0]] = j, j + 1
                     
+    
     def __merge_sort(self, arr):
         if len(arr) <= 1:
             return arr
-
+    
         mid = len(arr) // 2
         left_half = self.__merge_sort(arr[:mid])
         right_half = self.__merge_sort(arr[mid:])
-
+    
         return self.__merge(left_half, right_half)
-
+    
     def __merge(self, left, right):
         merged = []
         left_index = 0
         right_index = 0
-
+    
         # Merge smaller elements first in the result
         while left_index < len(left) and right_index < len(right):
-            if left[left_index] < right[right_index]:
+            if left[left_index][0] < right[right_index][0]:  # Compare characters
                 merged.append(left[left_index])
                 left_index += 1
             else:
                 merged.append(right[right_index])
                 right_index += 1
-
+    
         # If there are remaining elements in left or right half, append them to the result
         while left_index < len(left):
             merged.append(left[left_index])
             left_index += 1
-
+    
         while right_index < len(right):
             merged.append(right[right_index])
             right_index += 1
-
-        return merged        
-                       
+    
+        return merged
+                           
     def search(self):
         char = input("\nEnter character to check: ")
         char = char.upper()
         index = self.map.get(char, None)
-        if index is not None:
-            print(f"\nstatus:\n\nEXISTS\n\n'{self.arr[index][0]}' : '{self.arr[index][1]}'")
-            input('\n'+"Press Enter, to continue....")
-        else:
-            print("status:\n\nDOES NOT EXIST")
-            input('\n'+"Press Enter, to continue....")
+     # Use linear search to find the character
+        for pair in self.arr:
+            if pair[0] == char:
+                print(f"\nstatus:\n\nEXISTS\n\n'{pair[0]}' : '{pair[1]}'")
+                input('\n'+"Press Enter, to continue....")
+                return
+
+        print("status:\n\nDOES NOT EXIST")
+        input('\n'+"Press Enter, to continue....")
             
     def print_dict(self):
         count = 0
@@ -252,7 +254,7 @@ class Charmap:
                 self.map = {}
                 self.size=0 
                 self.data = self.__read_dict('dictionary.json')
-                self.variables()
+                self.__variables()
                 print("\nSwitched to Basic Dictionary.")
                 input('\n'+"Press Enter, to continue....")
                 break
@@ -261,7 +263,7 @@ class Charmap:
                 self.map = {}
                 self.size=0 
                 self.data = self.__read_dict('advanced_dict.json')
-                self.variables()
+                self.__variables()
                 print("\nSwitched to Advanced Dictionary.")
                 input('\n'+"Press Enter, to continue....")
                 break
