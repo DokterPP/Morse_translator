@@ -114,7 +114,14 @@ class Morse_Frequency:
 
         # Generate report for keywords sorted by frequency
         keywords_section = "*** Keywords sorted by frequency\n"
-        sorted_keywords = sorted(keywords.items(), key=lambda x: (-x[1], x[0]))
+        # sorted_keywords = sorted(keywords.items(), key=lambda x: (-x[1], x[0]))
+        
+        k = SortedList()
+        # Populate a list with keyword objects
+        for word , frequency in keywords.items():
+            k.insert(keyword(word, frequency))   
+        sorted_keywords = [item.word for item in k.get_list()]
+        
         for word, freq in sorted_keywords:
             keywords_section += f"{word}({freq})\n"
 

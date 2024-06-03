@@ -76,7 +76,6 @@ class Format:
     #recursive approach
     
     def clearFileWrapper(self, file_contents):
-        
         sys.setrecursionlimit(len(file_contents) + 10)  
         return self.clearFile(file_contents)
 
