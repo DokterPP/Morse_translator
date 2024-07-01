@@ -122,10 +122,12 @@ class Morse_Frequency:
             k.insert(keyword(word, frequency))   
         sorted_keywords = [item.word for item in k.get_list()]
         
-        for word, freq in sorted_keywords:
-            keywords_section += f"{word}({freq})\n"
+        # added in during interview
+        keyword_frequencies = [item.frequency for item in k.get_list()]
+        for word, frequency in zip(sorted_keywords, keyword_frequencies):
+            keywords_section += f"{word}({frequency})\n"
 
-        # Combine all sections to form the report
+        # Combine all sections to form the report 
         report = f"""\
 {"*" * 42}
    REPORT GENERATED ON: {timestamp}
